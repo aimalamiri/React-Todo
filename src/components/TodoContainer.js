@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import InputTodo from './InputTodo';
 import TodoList from './TodosList';
 
 export default class TodoContainer extends React.PureComponent {
@@ -44,6 +45,7 @@ export default class TodoContainer extends React.PureComponent {
     return (
       <React.Fragment>
         <Header />
+        <InputTodo />
         <TodoList todos={this.state.todos} handleChangeProps={this.handleChange} deleteTodoProps={this.delTodo} />
       </React.Fragment>
     );

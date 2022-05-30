@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from './Header';
 import TodoList from './TodosList';
 
 export default class TodoContainer extends React.PureComponent {
@@ -22,10 +23,28 @@ export default class TodoContainer extends React.PureComponent {
     ],
   };
 
+  delTodo = (id) => {
+    this.setState({
+      todos: [...this.state.todos.filter((todo) => todo.id !== id)],
+    });
+  };
+
+  handleChange = (id) => {
+    this.setState((prevState) => ({
+      todos: prevState.todos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, completed: !todo.completed };
+        }
+        return todo;
+      }),
+    }));
+  };
+
   render() {
     return (
       <React.Fragment>
-        <TodoList todos={this.state.todos} />
+        <Header />
+        <TodoList todos={this.state.todos} handleChangeProps={this.handleChange} deleteTodoProps={this.delTodo} />
       </React.Fragment>
     );
   }

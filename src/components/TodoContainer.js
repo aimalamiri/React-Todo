@@ -2,22 +2,23 @@ import React from 'react';
 import Header from './Header';
 import InputTodo from './InputTodo';
 import TodoList from './TodosList';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class TodoContainer extends React.PureComponent {
   state = {
     todos: [
       {
-        id: 1,
+        id: uuidv4(),
         title: 'Setup development environment',
         completed: true,
       },
       {
-        id: 2,
+        id: uuidv4(),
         title: 'Develop website and add content',
         completed: false,
       },
       {
-        id: 3,
+        id: uuidv4(),
         title: 'Deploy to live server',
         completed: false,
       },
@@ -41,11 +42,23 @@ export default class TodoContainer extends React.PureComponent {
     }));
   };
 
+  addTodoItem = (title) => {
+    const todo = {
+      id: uuidv4(),
+      title: title,
+      completed: false,
+    };
+
+    this.setState({
+      todos: [...this.state.todos, todo],
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
         <Header />
-        <InputTodo />
+        <InputTodo addTodoProps={this.addTodoItem} />
         <TodoList todos={this.state.todos} handleChangeProps={this.handleChange} deleteTodoProps={this.delTodo} />
       </React.Fragment>
     );

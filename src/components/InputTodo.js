@@ -11,9 +11,21 @@ export default class InputTodo extends React.PureComponent {
     });
   };
 
+  onSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.title.trim()) {
+      this.props.addTodoProps(this.state.title);
+      this.setState({
+        title: '',
+      });
+    } else {
+      alert("Can't add an empty task!");
+    }
+  };
+
   render() {
     return (
-      <form>
+      <form onSubmit={this.onSubmit}>
         <input type="text" name="title" placeholder="Add new task" value={this.state.title} onChange={this.onChange} />
         <button type="submit">Add</button>
       </form>

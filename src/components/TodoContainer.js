@@ -1,11 +1,31 @@
 import React from 'react';
+import TodoList from './TodosList';
 
 export default class TodoContainer extends React.PureComponent {
+  state = {
+    todos: [
+      {
+        id: 1,
+        title: 'Setup development environment',
+        completed: true,
+      },
+      {
+        id: 2,
+        title: 'Develop website and add content',
+        completed: false,
+      },
+      {
+        id: 3,
+        title: 'Deploy to live server',
+        completed: false,
+      },
+    ],
+  };
+
   render() {
     return (
       <React.Fragment>
-        <h1>Hello from create react app</h1>
-        <p>I'm comming from TodoContainer</p>
+        <TodoList todos={this.state.todos} />
       </React.Fragment>
     );
   }

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import TodoContainer from './components/TodoContainer';
 
-const element = <h1>Hello from create react app</h1>
-
-ReactDOM.render(element, document.querySelector('#root'));
+ReactDOM.render(<TodoContainer />, document.querySelector('#root'));

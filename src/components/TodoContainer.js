@@ -1,33 +1,37 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Header from './Header';
 import InputTodo from './InputTodo';
 import TodoList from './TodosList';
-import { v4 as uuidv4 } from 'uuid';
 
 export default class TodoContainer extends React.PureComponent {
-  state = {
-    todos: [
-      {
-        id: uuidv4(),
-        title: 'Setup development environment',
-        completed: true,
-      },
-      {
-        id: uuidv4(),
-        title: 'Develop website and add content',
-        completed: false,
-      },
-      {
-        id: uuidv4(),
-        title: 'Deploy to live server',
-        completed: false,
-      },
-    ],
-  };
+  constructor() {
+    super();
+    this.state = {
+      todos: [
+        {
+          id: uuidv4(),
+          title: 'Setup development environment',
+          completed: true,
+        },
+        {
+          id: uuidv4(),
+          title: 'Develop website and add content',
+          completed: false,
+        },
+        {
+          id: uuidv4(),
+          title: 'Deploy to live server',
+          completed: false,
+        },
+      ],
+    };
+  }
 
   delTodo = (id) => {
+    const { todos } = this.state;
     this.setState({
-      todos: [...this.state.todos.filter((todo) => todo.id !== id)],
+      todos: [...todos.filter((todo) => todo.id !== id)],
     });
   };
 
@@ -45,34 +49,37 @@ export default class TodoContainer extends React.PureComponent {
   addTodoItem = (title) => {
     const todo = {
       id: uuidv4(),
-      title: title,
+      title,
       completed: false,
     };
-
+    const { todos } = this.state;
     this.setState({
-      todos: [...this.state.todos, todo],
+      todos: [...todos, todo],
     });
   };
 
   setUpdate = (updatedTitle, id) => {
+    const { todos } = this.state;
     this.setState({
-      todos: this.state.todos.map((todo) => {
-        if (todo.id === id) {
-          todo.title = updatedTitle;
+      todos: todos.map((todo) => {
+        const t = todo;
+        if (t.id === id) {
+          t.title = updatedTitle;
         }
-        return todo;
+        return t;
       }),
     });
   };
 
   render() {
+    const { todos } = this.state;
     return (
       <div className="Container">
         <div className="inner">
           <Header />
           <InputTodo addTodoProps={this.addTodoItem} />
           <TodoList
-            todos={this.state.todos}
+            todos={todos}
             handleChangeProps={this.handleChange}
             deleteTodoProps={this.delTodo}
             setUpdate={this.setUpdate}

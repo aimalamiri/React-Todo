@@ -1,9 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class InputTodo extends React.PureComponent {
-  state = {
-    title: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: '',
+    };
+  }
 
   onChange = (e) => {
     this.setState({
@@ -13,17 +17,19 @@ export default class InputTodo extends React.PureComponent {
 
   onSubmit = (e) => {
     e.preventDefault();
-    if (this.state.title.trim()) {
-      this.props.addTodoProps(this.state.title);
+    const { title } = this.state;
+    const { addTodoProps } = this.props;
+    if (title.trim()) {
+      addTodoProps(title);
       this.setState({
         title: '',
       });
-    } else {
-      alert("Can't add an empty task!");
     }
+    return false;
   };
 
   render() {
+    const { title } = this.state;
     return (
       <form onSubmit={this.onSubmit} className="form-container">
         <input
@@ -31,7 +37,7 @@ export default class InputTodo extends React.PureComponent {
           name="title"
           className="input-text"
           placeholder="Add new task"
-          value={this.state.title}
+          value={title}
           onChange={this.onChange}
         />
         <button type="submit" className="input-submit">
@@ -41,3 +47,7 @@ export default class InputTodo extends React.PureComponent {
     );
   }
 }
+
+InputTodo.propTypes = {
+  addTodoProps: PropTypes.func.isRequired,
+};

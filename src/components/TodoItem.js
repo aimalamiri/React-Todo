@@ -1,10 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './TodoItem.module.css';
 
 export default class TodoItem extends React.Component {
-  state = {
-    editing: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      editing: false,
+    };
+  }
 
   handleEditing = () => {
     this.setState({
@@ -26,17 +31,20 @@ export default class TodoItem extends React.Component {
       textDecoration: 'line-through',
     };
 
-    const { completed, id, title } = this.props.todo;
+    const { todo } = this.props;
+    const { completed, id, title } = todo;
 
-    let viewMode = {};
-    let editMode = {};
+    const viewMode = {};
+    const editMode = {};
 
-    if (this.state.editing) {
+    const { editing } = this.state;
+    if (editing) {
       viewMode.display = 'none';
     } else {
       editMode.display = 'none';
     }
 
+    const { handleChangeProps, deleteTodoProps, setUpdate } = this.props;
     return (
       <li className={styles.item}>
         <div onDoubleClick={this.handleEditing} style={viewMode}>
@@ -44,12 +52,13 @@ export default class TodoItem extends React.Component {
             type="checkbox"
             className={styles.checkbox}
             checked={completed}
-            onChange={() => this.props.handleChangeProps(id)}
+            onChange={() => handleChangeProps(id)}
           />
           <button
             onClick={() => {
-              this.props.deleteTodoProps(id);
+              deleteTodoProps(id);
             }}
+            type="button"
           >
             Delete
           </button>
@@ -61,7 +70,7 @@ export default class TodoItem extends React.Component {
           style={editMode}
           value={title}
           onChange={(e) => {
-            this.props.setUpdate(e.target.value, id);
+            setUpdate(e.target.value, id);
           }}
           onKeyDown={this.handleUpdatedDone}
         />
@@ -69,3 +78,11 @@ export default class TodoItem extends React.Component {
     );
   }
 }
+
+TodoItem.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  todo: PropTypes.object.isRequired,
+  handleChangeProps: PropTypes.func.isRequired,
+  deleteTodoProps: PropTypes.func.isRequired,
+  setUpdate: PropTypes.func.isRequired,
+};

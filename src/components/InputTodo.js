@@ -25,9 +25,18 @@ export default class InputTodo extends React.PureComponent {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
-        <input type="text" name="title" placeholder="Add new task" value={this.state.title} onChange={this.onChange} />
-        <button type="submit">Add</button>
+      <form onSubmit={this.onSubmit} className="form-container">
+        <input
+          type="text"
+          name="title"
+          className="input-text"
+          placeholder="Add new task"
+          value={this.state.title}
+          onChange={this.onChange}
+        />
+        <button type="submit" className="input-submit">
+          Add
+        </button>
       </form>
     );
   }

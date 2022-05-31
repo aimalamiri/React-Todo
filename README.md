@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Math Magician
+# React Todo app
 
 This is a TODO application built with React in which you can add, edit, and remove the tasks.
 
